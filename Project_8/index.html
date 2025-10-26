@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test | Project.org</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- ===== HEADER / NAVIGATION ===== -->
+    <header>
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>Project.org</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-btns">
+                <a href="../index.html#Home" class="nav-links">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="../index.html#About" class="nav-links">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+                <a href="../index.html#My_Projects" class="nav-links">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Projects</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== PROJECT INTRODUCTION SECTION ===== -->
+    <section class="project-intro">
+        <div class="intro-container">
+            <div class="project-header">
+                <div class="project-icon-large">
+                    <i class="fas fa-keyboard"></i>
+                </div>
+                <h1>Typing Speed Test</h1>
+                <p class="project-tagline">Improve your typing speed and accuracy with real-time feedback</p>
+            </div>
+
+            <div class="project-overview">
+                <div class="overview-content">
+                    <div class="overview-text">
+                        <h2>Project Overview</h2>
+                        <p>
+                            Master touch typing with this comprehensive typing speed test application. 
+                            Get real-time feedback on your typing speed (WPM), accuracy, and errors. 
+                            With multiple difficulty levels, progress tracking, and detailed statistics, 
+                            this tool helps you become a faster and more accurate typist.
+                        </p>
+                        <div class="feature-highlights">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real-time WPM and accuracy tracking</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Multiple difficulty levels and text categories</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Detailed performance analytics</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Progress tracking over time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-stack">
+                        <h3>Tech Stack</h3>
+                        <div class="tech-items">
+                            <span class="tech-item">HTML5</span>
+                            <span class="tech-item">CSS3</span>
+                            <span class="tech-item">JavaScript</span>
+                            <span class="tech-item">ES6+</span>
+                            <span class="tech-item">LocalStorage</span>
+                            <span class="tech-item">Chart.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#live-preview" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i>
+                    Live Preview
+                </a>
+                <a href="https://github.com/yourusername/typing-speed-test" class="btn btn-secondary">
+                    <i class="fab fa-github"></i>
+                    Source Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LIVE PREVIEW SECTION ===== -->
+    <section id="live-preview" class="live-preview">
+        <div class="preview-container">
+            <h2>Live Preview</h2>
+            <p class="preview-description">
+                Test and improve your typing speed! Select your preferred text type and difficulty, then start typing.
+            </p>
+            
+            <!-- Typing Test Container -->
+            <div class="typing-test-container">
+                <div class="test-controls">
+                    <div class="control-group">
+                        <label for="textCategory">Text Type:</label>
+                        <select id="textCategory" class="control-select">
+                            <option value="common">Common Words</option>
+                            <option value="quotes">Famous Quotes</option>
+                            <option value="programming">Programming</option>
+                            <option value="literature">Literature</option>
+                            <option value="random">Random Sentences</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="difficulty">Difficulty:</label>
+                        <select id="difficulty" class="control-select">
+                            <option value="easy">Easy</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="hard">Hard</option>
+                            <option value="expert">Expert</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="timeLimit">Time (seconds):</label>
+                        <select id="timeLimit" class="control-select">
+                            <option value="30">30s</option>
+                            <option value="60" selected>60s</option>
+                            <option value="120">120s</option>
+                            <option value="180">180s</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="test-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="wpm">0</div>
+                        <div class="stat-label">WPM</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="accuracy">100%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="timer">60</div>
+                        <div class="stat-label">Seconds</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="errors">0</div>
+                        <div class="stat-label">Errors</div>
+                    </div>
+                </div>
+
+                <div class="typing-area">
+                    <div class="text-display" id="textDisplay">
+                        <!-- Text will be loaded here -->
+                    </div>
+                    <div class="input-area">
+                        <textarea 
+                            id="typingInput" 
+                            placeholder="Start typing here... The timer will begin when you start typing."
+                            rows="3"
+                        ></textarea>
+                        <div class="input-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span id="progressText">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="test-actions">
+                    <button id="startTest" class="game-btn primary">
+                        <i class="fas fa-play"></i>
+                        Start Test
+                    </button>
+                    <button id="resetTest" class="game-btn">
+                        <i class="fas fa-redo"></i>
+                        Reset
+                    </button>
+                    <button id="newText" class="game-btn">
+                        <i class="fas fa-sync"></i>
+                        New Text
+                    </button>
+                </div>
+
+                <div class="results-panel hidden" id="resultsPanel">
+                    <h3>Test Complete!</h3>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <div class="result-value" id="finalWpm">0</div>
+                            <div class="result-label">Words Per Minute</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value" id="finalAccuracy">0%</div>
+                            <div class="result-label">Accuracy</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value" id="finalErrors">0</div>
+                            <div class="result-label">Errors</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-value" id="finalScore">0</div>
+                            <div class="result-label">Score</div>
+                        </div>
+                    </div>
+                    <div class="result-actions">
+                        <button id="saveResult" class="game-btn">
+                            <i class="fas fa-save"></i>
+                            Save Result
+                        </button>
+                        <button id="tryAgain" class="game-btn primary">
+                            <i class="fas fa-redo"></i>
+                            Try Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <h3>Your Progress</h3>
+                <div class="progress-chart">
+                    <canvas id="progressChart"></canvas>
+                </div>
+                <div class="progress-stats">
+                    <div class="progress-stat">
+                        <div class="progress-value" id="bestWpm">0</div>
+                        <div class="progress-label">Best WPM</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-value" id="avgWpm">0</div>
+                        <div class="progress-label">Average WPM</div>
+                    </div>
+                    <div class="progress-stat">
+                        <div class="progress-value" id="testsTaken">0</div>
+                        <div class="progress-label">Tests Taken</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="keyboard-note">
+                <i class="fas fa-keyboard"></i>
+                <span>Tip: Focus on accuracy first, then speed. Use all fingers and try not to look at the keyboard!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Get instant feedback on your typing speed (WPM), accuracy percentage, and error count as you type.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>Multiple Difficulty Levels</h3>
+                    <p>Choose from Easy, Medium, Hard, and Expert levels with different text complexities and challenges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>Track your improvement over time with detailed statistics and visual progress charts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Various Text Categories</h3>
+                    <p>Practice with common words, famous quotes, programming terms, literature, or random sentences.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-stopwatch"></i>
+                    </div>
+                    <h3>Customizable Timers</h3>
+                    <p>Test your speed with different time limits from 30 seconds to 3 minutes based on your preference.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Performance Scoring</h3>
+                    <p>Receive a comprehensive score that combines both speed and accuracy for balanced improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SIMPLIFIED FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo and Description -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-code"></i>
+                        <span>Project.org</span>
+                    </div>
+                    <p class="footer-desc">
+                        A personal collection of web development projects built with HTML, CSS, and JavaScript.
+                    </p>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Get notified when new projects are added</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Social Links -->
+                <div class="footer-social">
+                    <h3>Follow Me</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-codepen"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 Project.org. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Chart.js for progress charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager | Project.org</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- ===== HEADER / NAVIGATION ===== -->
+    <header>
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>Project.org</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-btns">
+                <a href="../index.html#Home" class="nav-links">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="../index.html#About" class="nav-links">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+                <a href="../index.html#My_Projects" class="nav-links">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Projects</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== PROJECT INTRODUCTION SECTION ===== -->
+    <section class="project-intro">
+        <div class="intro-container">
+            <div class="project-header">
+                <div class="project-icon-large">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h1>Task Manager</h1>
+                <p class="project-tagline">A modern, intuitive task management application with local storage</p>
+            </div>
+
+            <div class="project-overview">
+                <div class="overview-content">
+                    <div class="overview-text">
+                        <h2>Project Overview</h2>
+                        <p>
+                            This Task Manager is a feature-rich web application that helps you organize your tasks 
+                            efficiently. With a clean, modern interface and powerful functionality, it's perfect 
+                            for personal productivity and project management.
+                        </p>
+                        <div class="feature-highlights">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Add, Edit & Delete Tasks</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Priority Levels & Categories</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Local Storage Persistence</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Drag & Drop Organization</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-stack">
+                        <h3>Tech Stack</h3>
+                        <div class="tech-items">
+                            <span class="tech-item">HTML5</span>
+                            <span class="tech-item">CSS3</span>
+                            <span class="tech-item">JavaScript</span>
+                            <span class="tech-item">LocalStorage</span>
+                            <span class="tech-item">Drag API</span>
+                            <span class="tech-item">ES6+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#live-preview" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i>
+                    Live Preview
+                </a>
+                <a href="https://github.com/yourusername/task-manager" class="btn btn-secondary">
+                    <i class="fab fa-github"></i>
+                    Source Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LIVE PREVIEW SECTION ===== -->
+    <section id="live-preview" class="live-preview">
+        <div class="preview-container">
+            <h2>Live Preview</h2>
+            <p class="preview-description">
+                Manage your tasks efficiently with this intuitive task manager. All data is saved in your browser's local storage.
+            </p>
+            
+            <div class="task-manager-container">
+                <div class="task-manager">
+                    <!-- Task Input Section -->
+                    <div class="task-input-section">
+                        <div class="input-group">
+                            <input type="text" id="taskInput" placeholder="Enter a new task..." class="task-input">
+                            <button id="addTaskBtn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Add Task
+                            </button>
+                        </div>
+                        
+                        <div class="task-options">
+                            <div class="option-group">
+                                <label for="prioritySelect">Priority:</label>
+                                <select id="prioritySelect" class="option-select">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="categorySelect">Category:</label>
+                                <select id="categorySelect" class="option-select">
+                                    <option value="personal">Personal</option>
+                                    <option value="work" selected>Work</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="health">Health</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="dueDate">Due Date:</label>
+                                <input type="date" id="dueDate" class="option-select">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Task Filters -->
+                    <div class="task-filters">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all">All Tasks</button>
+                            <button class="filter-btn" data-filter="pending">Pending</button>
+                            <button class="filter-btn" data-filter="completed">Completed</button>
+                        </div>
+                        
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search tasks..." class="search-input">
+                        </div>
+                    </div>
+
+                    <!-- Task Statistics -->
+                    <div class="task-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon total">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="totalTasks">0</div>
+                                <div class="stat-label">Total Tasks</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="pendingTasks">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon completed">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="completedTasks">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tasks List -->
+                    <div class="tasks-container">
+                        <div class="tasks-header">
+                            <h3>Your Tasks</h3>
+                            <button id="clearCompletedBtn" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-trash"></i>
+                                Clear Completed
+                            </button>
+                        </div>
+                        
+                        <div class="tasks-list" id="tasksList">
+                            <!-- Tasks will be dynamically added here -->
+                            <div class="empty-state">
+                                <i class="fas fa-clipboard-list"></i>
+                                <h4>No tasks yet</h4>
+                                <p>Add your first task to get started!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3>Easy Task Creation</h3>
+                    <p>Quickly add tasks with priority levels, categories, and due dates for better organization.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>Smart Filtering</h3>
+                    <p>Filter tasks by status, search by keywords, and organize by priority or category.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Local Storage</h3>
+                    <p>All your tasks are automatically saved in your browser and persist between sessions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Task Statistics</h3>
+                    <p>Get instant insights with visual statistics showing your task completion progress.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>
+                    <h3>Drag & Drop</h3>
+                    <p>Easily reorder tasks by dragging and dropping them in your preferred sequence.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Responsive Design</h3>
+                    <p>Works perfectly on all devices with a landscape-optimized layout for desktop users.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SIMPLIFIED FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo and Description -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-code"></i>
+                        <span>Project.org</span>
+                    </div>
+                    <p class="footer-desc">
+                        A personal collection of web development projects built with HTML, CSS, and JavaScript.
+                    </p>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Get notified when new projects are added</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Social Links -->
+                <div class="footer-social">
+                    <h3>Follow Me</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-codepen"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 Project.org. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

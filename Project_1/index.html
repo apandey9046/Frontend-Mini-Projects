@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator | Project.org</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <!-- ===== HEADER / NAVIGATION ===== -->
+  <header>
+    <div class="nav-container">
+      <!-- Logo -->
+      <div class="logo">
+        <i class="fas fa-code"></i>
+        <span>Project.org</span>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="nav-btns">
+        <a href="../index.html#Home" class="nav-links">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="../index.html#About" class="nav-links">
+          <i class="fas fa-info-circle"></i>
+          <span>About</span>
+        </a>
+        <a href="../index.html#My_Projects" class="nav-links">
+          <i class="fas fa-briefcase"></i>
+          <span>Projects</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== PROJECT INTRODUCTION SECTION ===== -->
+  <section class="project-intro">
+    <div class="intro-container">
+      <div class="project-header">
+        <div class="project-icon-large">
+          <i class="fas fa-calculator"></i>
+        </div>
+        <h1>Scientific Calculator</h1>
+        <p class="project-tagline">A modern, responsive calculator with portrait and landscape modes</p>
+      </div>
+
+      <div class="project-overview">
+        <div class="overview-content">
+          <div class="overview-text">
+            <h2>Project Overview</h2>
+            <p>
+              This scientific calculator features a unique dual-mode design. It starts in compact portrait mode
+              with basic functions and can switch to expansive landscape mode with advanced scientific functions
+              for larger screens.
+            </p>
+            <div class="feature-highlights">
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Dual Mode Design (Portrait/Landscape)</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Basic & Scientific Operations</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Auto-responsive for Mobile Devices</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Smart Mode Switching</span>
+              </div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <h3>Tech Stack</h3>
+            <div class="tech-items">
+              <span class="tech-item">HTML5</span>
+              <span class="tech-item">CSS3</span>
+              <span class="tech-item">JavaScript</span>
+              <span class="tech-item">CSS Grid</span>
+              <span class="tech-item">Flexbox</span>
+              <span class="tech-item">ES6+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a href="#live-preview" class="btn btn-primary">
+          <i class="fas fa-play-circle"></i>
+          Live Preview
+        </a>
+        <a href="https://github.com/yourusername/scientific-calculator" class="btn btn-secondary">
+          <i class="fab fa-github"></i>
+          Source Code
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LIVE PREVIEW SECTION ===== -->
+  <section id="live-preview" class="live-preview">
+    <div class="preview-container">
+      <h2>Live Preview</h2>
+      <p class="preview-description">
+        Try out the calculator below. Switch between portrait and landscape modes using the toggle button.
+      </p>
+
+      <div class="calculator-container">
+        <div class="calculator portrait">
+          <div class="display-container">
+            <div class="display">
+              <div class="previous-operand"></div>
+              <div class="current-operand">0</div>
+            </div>
+          </div>
+
+          <div class="keypad">
+            <div class="mode-toggle-container">
+              <button class="mode-toggle-btn" id="modeToggle">
+                <i class="fas fa-rotate-right"></i>
+                <span>Scientific Mode</span>
+              </button>
+            </div>
+
+            <div class="function-buttons">
+              <button class="btn btn-function" data-action="clear">C</button>
+              <button class="btn btn-function" data-action="backspace">⌫</button>
+              <button class="btn btn-function" data-action="percentage">%</button>
+              <button class="btn btn-operator" data-operator="÷">÷</button>
+            </div>
+
+            <div class="number-buttons">
+              <button class="btn btn-number" data-number="7">7</button>
+              <button class="btn btn-number" data-number="8">8</button>
+              <button class="btn btn-number" data-number="9">9</button>
+              <button class="btn btn-operator" data-operator="×">×</button>
+
+              <button class="btn btn-number" data-number="4">4</button>
+              <button class="btn btn-number" data-number="5">5</button>
+              <button class="btn btn-number" data-number="6">6</button>
+              <button class="btn btn-operator" data-operator="-">-</button>
+
+              <button class="btn btn-number" data-number="1">1</button>
+              <button class="btn btn-number" data-number="2">2</button>
+              <button class="btn btn-number" data-number="3">3</button>
+              <button class="btn btn-operator" data-operator="+">+</button>
+
+              <button class="btn btn-number" data-number="0">0</button>
+              <button class="btn btn-number" data-number=".">.</button>
+              <button class="btn btn-equals" data-action="calculate">=</button>
+            </div>
+
+            <div class="scientific-buttons">
+              <!-- Scientific functions will be shown in landscape mode -->
+              <button class="btn btn-scientific" data-scientific="sin">sin</button>
+              <button class="btn btn-scientific" data-scientific="cos">cos</button>
+              <button class="btn btn-scientific" data-scientific="tan">tan</button>
+              <button class="btn btn-scientific" data-scientific="log">log</button>
+              <button class="btn btn-scientific" data-scientific="ln">ln</button>
+
+              <button class="btn btn-scientific" data-scientific="sinh">sinh</button>
+              <button class="btn btn-scientific" data-scientific="cosh">cosh</button>
+              <button class="btn btn-scientific" data-scientific="tanh">tanh</button>
+              <button class="btn btn-scientific" data-scientific="exp">exp</button>
+              <button class="btn btn-scientific" data-scientific="√">√</button>
+
+              <button class="btn btn-scientific" data-scientific="(">(</button>
+              <button class="btn btn-scientific" data-scientific=")">)</button>
+              <button class="btn btn-scientific" data-scientific="π">π</button>
+              <button class="btn btn-scientific" data-scientific="e">e</button>
+              <button class="btn btn-scientific" data-scientific="x²">x²</button>
+
+              <button class="btn btn-scientific" data-scientific="x^y">x^y</button>
+              <button class="btn btn-scientific" data-scientific="10^x">10^x</button>
+              <button class="btn btn-scientific" data-scientific="1/x">1/x</button>
+              <button class="btn btn-scientific" data-scientific="|x|">|x|</button>
+              <button class="btn btn-scientific" data-scientific="!">x!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyboard-note">
+        <i class="fas fa-keyboard"></i>
+        <span>Tip: You can use your keyboard for calculations!</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES SECTION ===== -->
+  <section class="features-section">
+    <div class="features-container">
+      <h2>Key Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Dual Mode Design</h3>
+          <p>Compact portrait mode for basic operations and expansive landscape mode for scientific functions with smart
+            auto-switching.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-square-root-alt"></i>
+          </div>
+          <h3>Scientific Functions</h3>
+          <p>Trigonometric, logarithmic, exponential, and other advanced mathematical functions in landscape mode.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-keyboard"></i>
+          </div>
+          <h3>Keyboard Support</h3>
+          <p>Full keyboard accessibility with support for number keys, operators, and function keys in both modes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <h3>Smart Responsive</h3>
+          <p>Automatically stays in portrait mode on mobile devices and allows mode switching on desktop/laptop.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h3>Modern UI</h3>
+          <p>Clean, intuitive interface with smooth transitions between modes and visual feedback.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>Fast & Efficient</h3>
+          <p>Lightweight implementation with instant calculations and seamless mode transitions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIMPLIFIED FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-content">
+        <!-- Logo and Description -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <i class="fas fa-code"></i>
+            <span>Project.org</span>
+          </div>
+          <p class="footer-desc">
+            A personal collection of web development projects built with HTML, CSS, and JavaScript.
+          </p>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div class="footer-newsletter">
+          <h3>Stay Updated</h3>
+          <p>Get notified when new projects are added</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Enter your email" class="newsletter-input">
+            <button class="newsletter-btn">
+              <i class="fas fa-paper-plane"></i>
+              Subscribe
+            </button>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="footer-social">
+          <h3>Follow Me</h3>
+          <div class="social-links">
+            <a href="#" class="social-link">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" class="social-link">
+              <i class="fab fa-codepen"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="footer-bottom">
+        <div class="footer-copyright">
+          <p>&copy; 2025 Project.org. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

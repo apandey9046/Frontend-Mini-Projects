@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game | Project.org</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- ===== HEADER / NAVIGATION ===== -->
+    <header>
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>Project.org</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-btns">
+                <a href="../index.html#Home" class="nav-links">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="../index.html#About" class="nav-links">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+                <a href="../index.html#My_Projects" class="nav-links">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Projects</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== PROJECT INTRODUCTION SECTION ===== -->
+    <section class="project-intro">
+        <div class="intro-container">
+            <div class="project-header">
+                <div class="project-icon-large">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h1>Snake Game</h1>
+                <p class="project-tagline">Classic snake game with modern design and smooth controls</p>
+            </div>
+
+            <div class="project-overview">
+                <div class="overview-content">
+                    <div class="overview-text">
+                        <h2>Project Overview</h2>
+                        <p>
+                            Experience the nostalgia of the classic Snake Game with a modern twist! 
+                            Control your snake to eat food and grow longer while avoiding walls and yourself. 
+                            With multiple difficulty levels, score tracking, and beautiful animations, 
+                            this game brings the timeless classic to life in your browser.
+                        </p>
+                        <div class="feature-highlights">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Multiple difficulty levels</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>High score tracking</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Smooth keyboard controls</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Mobile touch support</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tech-stack">
+                        <h3>Tech Stack</h3>
+                        <div class="tech-items">
+                            <span class="tech-item">HTML5</span>
+                            <span class="tech-item">CSS3</span>
+                            <span class="tech-item">JavaScript</span>
+                            <span class="tech-item">Canvas API</span>
+                            <span class="tech-item">ES6+</span>
+                            <span class="tech-item">LocalStorage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#live-preview" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i>
+                    Live Preview
+                </a>
+                <a href="https://github.com/yourusername/snake-game" class="btn btn-secondary">
+                    <i class="fab fa-github"></i>
+                    Source Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LIVE PREVIEW SECTION ===== -->
+    <section id="live-preview" class="live-preview">
+        <div class="preview-container">
+            <h2>Live Preview</h2>
+            <p class="preview-description">
+                Play the classic Snake Game right in your browser! Use arrow keys to control the snake and eat the food to grow.
+            </p>
+            
+            <!-- Snake Game Container -->
+            <div class="snake-game-container">
+                <div class="game-header">
+                    <div class="game-stats">
+                        <div class="stat">
+                            <i class="fas fa-star"></i>
+                            <span>Score: <span id="score">0</span></span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-trophy"></i>
+                            <span>High Score: <span id="highScore">0</span></span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-bolt"></i>
+                            <span>Speed: <span id="speedLevel">Normal</span></span>
+                        </div>
+                    </div>
+                    <div class="game-controls-top">
+                        <button id="startBtn" class="game-btn">
+                            <i class="fas fa-play"></i>
+                            Start Game
+                        </button>
+                        <button id="pauseBtn" class="game-btn" disabled>
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                        <button id="resetBtn" class="game-btn">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-area">
+                    <canvas id="gameCanvas" width="400" height="400"></canvas>
+                    <div id="gameOver" class="game-over hidden">
+                        <h3>Game Over!</h3>
+                        <p>Your Score: <span id="finalScore">0</span></p>
+                        <button id="restartBtn" class="game-btn">
+                            <i class="fas fa-redo"></i>
+                            Play Again
+                        </button>
+                    </div>
+                    <div id="gameStart" class="game-start">
+                        <h3>Snake Game</h3>
+                        <p>Use arrow keys to move</p>
+                        <p>Eat food to grow longer</p>
+                        <button id="startGameBtn" class="game-btn primary">
+                            <i class="fas fa-play"></i>
+                            Start Game
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="game-footer">
+                    <div class="difficulty-selector">
+                        <h4>Difficulty:</h4>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn active" data-speed="150">Easy</button>
+                            <button class="difficulty-btn" data-speed="100">Normal</button>
+                            <button class="difficulty-btn" data-speed="70">Hard</button>
+                            <button class="difficulty-btn" data-speed="40">Expert</button>
+                        </div>
+                    </div>
+                    <div class="mobile-controls">
+                        <h4>Mobile Controls:</h4>
+                        <div class="control-buttons">
+                            <button class="control-btn" data-direction="up"><i class="fas fa-arrow-up"></i></button>
+                            <div class="horizontal-controls">
+                                <button class="control-btn" data-direction="left"><i class="fas fa-arrow-left"></i></button>
+                                <button class="control-btn" data-direction="down"><i class="fas fa-arrow-down"></i></button>
+                                <button class="control-btn" data-direction="right"><i class="fas fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="keyboard-note">
+                <i class="fas fa-keyboard"></i>
+                <span>Controls: Use Arrow Keys or WASD to move the snake. Avoid walls and don't run into yourself!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES SECTION ===== -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <h3>Multiple Difficulty Levels</h3>
+                    <p>Choose from Easy, Normal, Hard, or Expert modes with increasing speed challenges to test your skills.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Score Tracking</h3>
+                    <p>Track your current score and compete against your personal high score stored locally in your browser.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Dual Controls</h3>
+                    <p>Play with keyboard arrow keys or use the on-screen touch controls for mobile device compatibility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Modern Design</h3>
+                    <p>Enjoy a sleek, modern interface with smooth animations, vibrant colors, and responsive design.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Optimized</h3>
+                    <p>Fully responsive design with touch controls that work seamlessly on smartphones and tablets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Smooth Performance</h3>
+                    <p>Optimized game loop and rendering using HTML5 Canvas for buttery smooth 60fps gameplay.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SIMPLIFIED FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Logo and Description -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-code"></i>
+                        <span>Project.org</span>
+                    </div>
+                    <p class="footer-desc">
+                        A personal collection of web development projects built with HTML, CSS, and JavaScript.
+                    </p>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div class="footer-newsletter">
+                    <h3>Stay Updated</h3>
+                    <p>Get notified when new projects are added</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="newsletter-input">
+                        <button class="newsletter-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Social Links -->
+                <div class="footer-social">
+                    <h3>Follow Me</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-codepen"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 Project.org. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
