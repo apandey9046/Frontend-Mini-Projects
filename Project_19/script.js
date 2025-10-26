@@ -1,381 +1,338 @@
-class Chatbot {
+// Quiz Master - Multiple Choice Quiz App
+
+class QuizApp {
     constructor() {
-        this.soundEnabled = true;
-        this.chatHistory = [];
-        this.lastKeyPressTime = 0;
-        this.keyPressCooldown = 100; // ms between key sounds
-        
-        this.initializeElements();
-        this.setupEventListeners();
-        this.startClock();
-        this.setupAudio();
+        this.quizData = {
+            general: {
+                name: "General Knowledge",
+                questions: [
+                    {
+                        question: "What is the capital of France?",
+                        options: ["London", "Berlin", "Paris", "Madrid"],
+                        correct: 2
+                    },
+                    {
+                        question: "Which planet is known as the Red Planet?",
+                        options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                        correct: 1
+                    },
+                    {
+                        question: "Who painted the Mona Lisa?",
+                        options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"],
+                        correct: 2
+                    },
+                    {
+                        question: "What is the largest ocean on Earth?",
+                        options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                        correct: 3
+                    },
+                    {
+                        question: "Which element has the chemical symbol 'O'?",
+                        options: ["Gold", "Oxygen", "Osmium", "Oganesson"],
+                        correct: 1
+                    }
+                ]
+            },
+            science: {
+                name: "Science & Technology",
+                questions: [
+                    {
+                        question: "What is the speed of light in vacuum?",
+                        options: ["299,792,458 m/s", "150,000,000 m/s", "1,080,000,000 km/h", "671,000,000 mph"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which programming language is known as the 'language of the web'?",
+                        options: ["Python", "Java", "JavaScript", "C++"],
+                        correct: 2
+                    },
+                    {
+                        question: "What does CPU stand for?",
+                        options: ["Central Processing Unit", "Computer Personal Unit", "Central Processor Unit", "Central Program Utility"],
+                        correct: 0
+                    },
+                    {
+                        question: "Which gas do plants absorb from the atmosphere?",
+                        options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+                        correct: 2
+                    }
+                ]
+            },
+            history: {
+                name: "History",
+                questions: [
+                    {
+                        question: "In which year did World War II end?",
+                        options: ["1944", "1945", "1946", "1947"],
+                        correct: 1
+                    },
+                    {
+                        question: "Who was the first President of the United States?",
+                        options: ["Thomas Jefferson", "John Adams", "George Washington", "James Madison"],
+                        correct: 2
+                    },
+                    {
+                        question: "Which ancient civilization built the pyramids?",
+                        options: ["Romans", "Greeks", "Egyptians", "Mayans"],
+                        correct: 2
+                    },
+                    {
+                        question: "When was the Declaration of Independence signed?",
+                        options: ["1774", "1775", "1776", "1777"],
+                        correct: 2
+                    }
+                ]
+            }
+        };
+
+        this.currentQuiz = null;
+        this.currentQuestionIndex = 0;
+        this.score = 0;
+        this.userAnswers = [];
+
+        this.initializeApp();
     }
 
-    initializeElements() {
-        // Chat elements
-        this.chatInput = document.getElementById('chatInput');
-        this.sendButton = document.getElementById('sendButton');
-        this.chatMessages = document.getElementById('chatMessages');
-        
-        // Time display elements
-        this.currentTime = document.getElementById('currentTime');
-        this.currentDate = document.getElementById('currentDate');
-        
-        // Sound toggle
-        this.soundToggle = document.getElementById('soundToggle');
-        
-        // Audio elements
-        this.keySound = document.getElementById('keySound');
-        this.sendSound = document.getElementById('sendSound');
-        this.receiveSound = document.getElementById('receiveSound');
+    initializeApp() {
+        this.setupEventListeners();
+        this.showQuizSelection();
     }
 
     setupEventListeners() {
-        // Send message events
-        this.sendButton.addEventListener('click', () => this.sendMessage());
-        this.chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.sendMessage();
-            }
-        });
-
-        // Keyboard sound effects - improved
-        this.chatInput.addEventListener('input', (e) => {
-            this.playKeySound();
-        });
-        
-        this.chatInput.addEventListener('keydown', (e) => {
-            // Play sound for special keys (backspace, enter, etc.)
-            if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Enter') {
-                this.playKeySound();
-            }
-        });
-        
-        // Sound toggle
-        this.soundToggle.addEventListener('click', () => this.toggleSound());
-        
-        // Suggestion buttons
-        document.querySelectorAll('.suggestion-btn').forEach(btn => {
+        // Quiz selection
+        document.querySelectorAll('.start-quiz-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const message = e.target.closest('.suggestion-btn').dataset.message;
-                this.chatInput.value = message;
-                this.sendMessage();
+                const category = e.target.dataset.category;
+                this.startQuiz(category);
             });
         });
 
-        // Enable touch scrolling for mobile
-        this.chatMessages.addEventListener('touchstart', this.handleTouchStart.bind(this));
-        this.chatMessages.addEventListener('touchmove', this.handleTouchMove.bind(this));
+        // Quiz navigation
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            this.previousQuestion();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            this.nextQuestion();
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            this.submitQuiz();
+        });
+
+        // Results screen
+        document.getElementById('restart-quiz').addEventListener('click', () => {
+            this.showQuizSelection();
+        });
+
+        document.getElementById('review-answers').addEventListener('click', () => {
+            this.reviewAnswers();
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            this.handleKeyboardShortcuts(e);
+        });
     }
 
-    setupAudio() {
-        // Create realistic keyboard sounds using Web Audio API
-        this.createKeyboardSound(this.keySound);
-        this.createSendSound(this.sendSound);
-        this.createReceiveSound(this.receiveSound);
+    showQuizSelection() {
+        document.getElementById('quiz-selection').classList.add('active');
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('results-screen').classList.remove('active');
+        
+        this.currentQuiz = null;
+        this.currentQuestionIndex = 0;
+        this.score = 0;
+        this.userAnswers = [];
     }
 
-    createKeyboardSound(audioElement) {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        const filter = audioContext.createBiquadFilter();
+    startQuiz(category) {
+        this.currentQuiz = this.quizData[category];
+        this.currentQuestionIndex = 0;
+        this.score = 0;
+        this.userAnswers = new Array(this.currentQuiz.questions.length).fill(null);
+
+        document.getElementById('quiz-selection').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
         
-        oscillator.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        // Random frequency between 100-300 Hz for variety
-        const frequency = 100 + Math.random() * 200;
-        oscillator.frequency.value = frequency;
-        oscillator.type = 'sine';
-        
-        filter.type = 'lowpass';
-        filter.frequency.value = 1000;
-        
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.01);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.1);
+        this.updateQuizHeader(category);
+        this.displayQuestion();
+        this.updateNavigation();
     }
 
-    createSendSound(audioElement) {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = 800;
-        oscillator.type = 'sine';
-        
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.3);
+    updateQuizHeader(category) {
+        document.getElementById('quiz-category').textContent = this.currentQuiz.name;
+        document.getElementById('current-score').textContent = this.score;
+        this.updateProgress();
     }
 
-    createReceiveSound(audioElement) {
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = 600;
-        oscillator.type = 'triangle';
-        
-        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.08, audioContext.currentTime + 0.1);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.4);
+    updateProgress() {
+        const progress = ((this.currentQuestionIndex + 1) / this.currentQuiz.questions.length) * 100;
+        document.getElementById('progress-fill').style.width = `${progress}%`;
+        document.getElementById('question-count').textContent = 
+            `Question ${this.currentQuestionIndex + 1}/${this.currentQuiz.questions.length}`;
     }
 
-    playKeySound() {
-        const now = Date.now();
-        if (now - this.lastKeyPressTime < this.keyPressCooldown) return;
+    displayQuestion() {
+        const question = this.currentQuiz.questions[this.currentQuestionIndex];
+        const optionsContainer = document.getElementById('options-container');
         
-        this.lastKeyPressTime = now;
+        document.getElementById('question-text').textContent = question.question;
         
-        if (this.soundEnabled) {
-            // Create a new sound instance for each keypress
-            this.createKeyboardSound(this.keySound);
+        optionsContainer.innerHTML = '';
+        question.options.forEach((option, index) => {
+            const optionBtn = document.createElement('button');
+            optionBtn.className = 'option-btn';
+            if (this.userAnswers[this.currentQuestionIndex] === index) {
+                optionBtn.classList.add('selected');
+            }
+            
+            optionBtn.innerHTML = `
+                <span class="option-number">${index + 1}</span>
+                <span class="option-text">${option}</span>
+            `;
+            
+            optionBtn.addEventListener('click', () => {
+                this.selectAnswer(index);
+            });
+            
+            optionsContainer.appendChild(optionBtn);
+        });
+
+        this.updateProgress();
+    }
+
+    selectAnswer(optionIndex) {
+        // Remove selected class from all options
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        
+        // Add selected class to clicked option
+        document.querySelectorAll('.option-btn')[optionIndex].classList.add('selected');
+        
+        // Store user's answer
+        this.userAnswers[this.currentQuestionIndex] = optionIndex;
+        
+        // Enable next button
+        document.getElementById('next-btn').disabled = false;
+    }
+
+    previousQuestion() {
+        if (this.currentQuestionIndex > 0) {
+            this.currentQuestionIndex--;
+            this.displayQuestion();
+            this.updateNavigation();
         }
     }
 
-    playSendSound() {
-        if (this.soundEnabled) {
-            this.createSendSound(this.sendSound);
+    nextQuestion() {
+        if (this.currentQuestionIndex < this.currentQuiz.questions.length - 1) {
+            this.currentQuestionIndex++;
+            this.displayQuestion();
+            this.updateNavigation();
         }
     }
 
-    playReceiveSound() {
-        if (this.soundEnabled) {
-            this.createReceiveSound(this.receiveSound);
-        }
-    }
-
-    toggleSound() {
-        this.soundEnabled = !this.soundEnabled;
-        this.soundToggle.classList.toggle('muted', !this.soundEnabled);
+    updateNavigation() {
+        document.getElementById('prev-btn').disabled = this.currentQuestionIndex === 0;
+        document.getElementById('next-btn').disabled = this.currentQuestionIndex === this.currentQuiz.questions.length - 1;
         
-        if (this.soundEnabled) {
-            this.soundToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-            this.soundToggle.title = 'Disable sounds';
+        const showSubmit = this.currentQuestionIndex === this.currentQuiz.questions.length - 1;
+        document.getElementById('next-btn').style.display = showSubmit ? 'none' : 'flex';
+        document.getElementById('submit-btn').style.display = showSubmit ? 'flex' : 'none';
+    }
+
+    submitQuiz() {
+        this.calculateScore();
+        this.showResults();
+    }
+
+    calculateScore() {
+        this.score = 0;
+        this.currentQuiz.questions.forEach((question, index) => {
+            if (this.userAnswers[index] === question.correct) {
+                this.score++;
+            }
+        });
+    }
+
+    showResults() {
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('results-screen').classList.add('active');
+        
+        const totalQuestions = this.currentQuiz.questions.length;
+        const percentage = Math.round((this.score / totalQuestions) * 100);
+        
+        document.getElementById('final-score').textContent = this.score;
+        document.getElementById('correct-answers').textContent = this.score;
+        document.getElementById('total-questions').textContent = totalQuestions;
+        document.getElementById('percentage').textContent = `${percentage}%`;
+        
+        this.updateResultsMessage(percentage);
+    }
+
+    updateResultsMessage(percentage) {
+        const messageElement = document.getElementById('results-message');
+        let message = '';
+        let title = '';
+        
+        if (percentage >= 90) {
+            title = 'Excellent!';
+            message = 'Outstanding performance! You have mastered this topic.';
+        } else if (percentage >= 70) {
+            title = 'Great Job!';
+            message = 'Very good score! You have a solid understanding of the material.';
+        } else if (percentage >= 50) {
+            title = 'Good Effort';
+            message = 'Not bad! With a little more practice, you can improve further.';
         } else {
-            this.soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            this.soundToggle.title = 'Enable sounds';
+            title = 'Keep Practicing';
+            message = 'Don\'t worry! Review the material and try again. Practice makes perfect.';
         }
-    }
-
-    startClock() {
-        this.updateClock();
-        setInterval(() => this.updateClock(), 1000);
-    }
-
-    updateClock() {
-        const now = new Date();
         
-        // Format time
-        const timeOptions = { 
-            hour: '2-digit', 
-            minute: '2-digit',
-            hour12: true 
-        };
-        const timeString = now.toLocaleTimeString('en-US', timeOptions);
-        
-        // Format date
-        const dateOptions = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        };
-        const dateString = now.toLocaleDateString('en-US', dateOptions);
-        
-        this.currentTime.textContent = timeString;
-        this.currentDate.textContent = dateString;
-    }
-
-    sendMessage() {
-        const message = this.chatInput.value.trim();
-        if (!message) return;
-
-        // Add user message to chat
-        this.addMessage(message, 'user');
-        this.playSendSound();
-        
-        // Clear input
-        this.chatInput.value = '';
-        
-        // Simulate AI thinking delay
-        setTimeout(() => {
-            const response = this.generateResponse(message);
-            this.addMessage(response, 'bot');
-            this.playReceiveSound();
-        }, 1000 + Math.random() * 1000);
-    }
-
-    addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}-message`;
-        
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('en-US', { 
-            hour: '2-digit', 
-            minute: '2-digit' 
-        });
-        
-        const avatarIcon = sender === 'bot' ? 'fas fa-robot' : 'fas fa-user';
-        
-        messageDiv.innerHTML = `
-            <div class="message-avatar">
-                <i class="${avatarIcon}"></i>
-            </div>
-            <div class="message-content">
-                <div class="message-text">${this.escapeHTML(text)}</div>
-                <div class="message-time">${timeString}</div>
-            </div>
+        messageElement.innerHTML = `
+            <h4>${title}</h4>
+            <p>${message}</p>
         `;
-        
-        this.chatMessages.appendChild(messageDiv);
-        this.scrollToBottom();
-        
-        // Add to chat history
-        this.chatHistory.push({
-            sender: sender,
-            text: text,
-            timestamp: now
-        });
     }
 
-    scrollToBottom() {
-        // Smooth scroll to bottom
-        this.chatMessages.scrollTo({
-            top: this.chatMessages.scrollHeight,
-            behavior: 'smooth'
-        });
+    reviewAnswers() {
+        // For now, just restart the quiz
+        // In a full implementation, this would show detailed answer review
+        this.startQuiz(Object.keys(this.quizData).find(key => this.quizData[key] === this.currentQuiz));
     }
 
-    // Touch scrolling for mobile devices
-    handleTouchStart(e) {
-        this.touchStartY = e.touches[0].clientY;
-        this.scrollStartTop = this.chatMessages.scrollTop;
-    }
-
-    handleTouchMove(e) {
-        if (!this.touchStartY) return;
+    handleKeyboardShortcuts(e) {
+        if (!document.getElementById('quiz-screen').classList.contains('active')) return;
         
-        const touchY = e.touches[0].clientY;
-        const diff = this.touchStartY - touchY;
-        this.chatMessages.scrollTop = this.scrollStartTop + diff;
-    }
-
-    escapeHTML(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    generateResponse(userMessage) {
-        const message = userMessage.toLowerCase().trim();
-        
-        // Time-related queries
-        if (message.includes('time') || message.includes('what time')) {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true 
-            });
-            return `The current time is ${timeString}.`;
+        // Number keys 1-4 for answer selection
+        if (e.key >= '1' && e.key <= '4') {
+            const optionIndex = parseInt(e.key) - 1;
+            if (optionIndex < this.currentQuiz.questions[this.currentQuestionIndex].options.length) {
+                this.selectAnswer(optionIndex);
+            }
         }
         
-        // Date-related queries
-        if (message.includes('date') || message.includes('today') || message.includes('what date')) {
-            const now = new Date();
-            const dateString = now.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            return `Today is ${dateString}.`;
+        // Arrow keys for navigation
+        if (e.key === 'ArrowLeft') {
+            this.previousQuestion();
+        } else if (e.key === 'ArrowRight') {
+            if (this.currentQuestionIndex < this.currentQuiz.questions.length - 1) {
+                this.nextQuestion();
+            } else {
+                this.submitQuiz();
+            }
         }
         
-        // Weather-related queries
-        if (message.includes('weather') || message.includes('temperature')) {
-            const weatherResponses = [
-                "It's a beautiful day outside! Perfect weather for going out.",
-                "The weather seems nice today, though I don't have real-time weather data.",
-                "I'd check a weather service for accurate forecasts, but it looks pleasant!",
-                "Weather conditions appear favorable today for outdoor activities."
-            ];
-            return weatherResponses[Math.floor(Math.random() * weatherResponses.length)];
+        // Enter key to submit on last question
+        if (e.key === 'Enter' && this.currentQuestionIndex === this.currentQuiz.questions.length - 1) {
+            this.submitQuiz();
         }
-        
-        // Greetings
-        if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
-            const greetings = [
-                "Hello! How can I assist you today?",
-                "Hi there! What can I help you with?",
-                "Hey! Nice to meet you. How can I be of service?",
-                "Hello! I'm here to help. What would you like to know?"
-            ];
-            return greetings[Math.floor(Math.random() * greetings.length)];
-        }
-        
-        // How are you
-        if (message.includes('how are you') || message.includes('how do you do')) {
-            return "I'm functioning perfectly! Thanks for asking. How can I help you today?";
-        }
-        
-        // Name queries
-        if (message.includes('your name') || message.includes('who are you')) {
-            return "I'm an AI assistant created to help with your queries. You can call me ChatBot!";
-        }
-        
-        // Help queries
-        if (message.includes('help') || message.includes('what can you do')) {
-            return "I can tell you the current time and date, discuss weather, answer questions, and have friendly conversations. Try asking me anything!";
-        }
-        
-        // Thank you responses
-        if (message.includes('thank') || message.includes('thanks')) {
-            return "You're welcome! Is there anything else I can help you with?";
-        }
-        
-        // Goodbye
-        if (message.includes('bye') || message.includes('goodbye') || message.includes('see you')) {
-            return "Goodbye! Feel free to come back if you need any help. Have a great day!";
-        }
-        
-        // Default responses for unknown queries
-        const defaultResponses = [
-            "That's interesting! Can you tell me more?",
-            "I understand. What else would you like to know?",
-            "Thanks for sharing that with me. Is there anything specific you'd like to ask?",
-            "I see. How can I assist you further?",
-            "That's a great point! Did you have any questions about time, date, or weather?",
-            "Interesting! I'm here to help with any information you need.",
-            "I appreciate you sharing that. What can I help you with today?"
-        ];
-        
-        return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
     }
 }
 
-// Initialize the chatbot when the DOM is loaded
-let chatbot;
+// Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    chatbot = new Chatbot();
+    new QuizApp();
 });
